@@ -1,4 +1,4 @@
-# Proai SOLR Driver
+# Proai SOLR Driver [![Build Status](https://travis-ci.org/redbox-mint/proai-solr-driver.svg?branch=master)](https://travis-ci.org/redbox-mint/proai-solr-driver)
 
 Enables a SOLR index as a Proai data source.
 
