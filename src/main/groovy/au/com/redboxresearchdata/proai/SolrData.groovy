@@ -20,6 +20,7 @@ package au.com.redboxresearchdata.proai
 import org.apache.solr.common.params.*
 import org.apache.solr.client.solrj.*
 import org.apache.solr.client.solrj.impl.*
+import org.apache.solr.client.solrj.util.ClientUtils
 import groovy.json.*
 
 /**
@@ -95,7 +96,7 @@ class SolrData {
   }
 
   public SolrRecord getRecord(core, id, format) {
-    final params = ['q': "${recordTypeField}:${typeRecord} AND id:${id} AND metadataSchema_s:${format}"]
+    final params = ['q': "${recordTypeField}:${typeRecord} AND id:${ClientUtils.escapeQueryChars(id)} AND metadataSchema_s:${format}"]
     final resp = getClient(core).query(new MapSolrParams(params))
     final docs = resp.getResults()
     if (docs.getNumFound() > 0) {
