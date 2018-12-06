@@ -36,6 +36,7 @@ class SolrData {
   String typeMetadataFormat
   String typeSet
   String typeRecord
+  String idMeta
 
   def clients = [:]
 
@@ -49,8 +50,11 @@ class SolrData {
     return clients[clientId]
   }
 
-  public Date getLatestModDate() {
-
+  public Date getLatestModDate(core) {
+    final params = ['q': "id:${idMeta}"]
+    final resp = getClient(core).query(new MapSolrParams(params))
+    final docs = resp.getResults()
+    return docs[0].latest_dt
   }
 
   public String getIdentity(core) {

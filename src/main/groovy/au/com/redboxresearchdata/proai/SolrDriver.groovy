@@ -42,8 +42,8 @@ class SolrDriver implements OAIDriver {
   static final String SOLR_FIELD_METADATA_PREFIX = "proai.driver.solr.fieldMetadataPrefix"
   static final String SOLR_FIELD_METADATA_NAMESPACE = "proai.driver.solr.fieldMetadataNamespace"
   static final String SOLR_FIELD_METADATA_SCHEMA = "proai.driver.solr.fieldMetadataSchema"
+  static final String SOLR_ID_OAIPMH_META = "proai.driver.solr.idOaipmhMeta"
 
-  Date date;
   SolrData solrData;
   String core;
 
@@ -61,7 +61,8 @@ class SolrDriver implements OAIDriver {
        typeIdentity: props.getProperty(SOLR_TYPE_IDENTITY),
        typeMetadataFormat: props.getProperty(SOLR_TYPE_METADATAFORMAT),
        typeSet: props.getProperty(SOLR_TYPE_SET),
-       typeRecord: props.getProperty(SOLR_TYPE_RECORD)
+       typeRecord: props.getProperty(SOLR_TYPE_RECORD),
+       idMeta: props.getProperty(SOLR_ID_OAIPMH_META)
      )
      core = props.getProperty(SOLR_CORE)
      SolrSetInfo.field_spec = props.getProperty(SOLR_FIELD_SPEC_SET)
@@ -99,10 +100,8 @@ class SolrDriver implements OAIDriver {
     * </p>
     */
    public Date getLatestDate() throws RepositoryException {
-     if (!this.date) {
-       this.date = new Date();
-     }
-     return this.date;
+     def dt = solrData.getLatestModDate(core)
+     return dt
    }
 
    /**
