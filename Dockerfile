@@ -1,4 +1,4 @@
-FROM jetty:9.3-alpine
+FROM jetty:9.4.36-jre8
 USER root
 
 ENV APPSERVER_HOME /var/lib/jetty
