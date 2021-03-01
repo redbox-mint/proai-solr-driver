@@ -148,8 +148,7 @@ class SolrDriver implements OAIDriver {
                                      Date until,
                                      String mdPrefix) throws RepositoryException
    {
-     def records = solrData.getRecords(core)
-     return new RemoteIteratorImpl<Record>(records.iterator());
+     return new RemoteIteratorImpl<Record>(new SolrRecordIterator(core,solrData));
    }
 
    /**

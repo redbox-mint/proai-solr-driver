@@ -17,6 +17,7 @@
  ******************************************************************************/
 package au.com.redboxresearchdata.proai
 
+import org.apache.solr.common.SolrDocumentList
 import org.apache.solr.common.params.*
 import org.apache.solr.client.solrj.*
 import org.apache.solr.client.solrj.impl.*
@@ -97,6 +98,14 @@ class SolrData {
       records << solrRec
     }
     return records
+  }
+
+  public SolrDocumentList getRecordsPage(core, int start, int rows) {
+
+    final params = ['q': "${recordTypeField}:${typeRecord}", 'start': start, 'rows': rows]
+    final resp = getClient(core).query(new MapSolrParams(params))
+
+    return resp.getResults()
   }
 
   public SolrRecord getRecord(core, id, format) {
