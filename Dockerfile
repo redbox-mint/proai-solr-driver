@@ -1,4 +1,4 @@
-FROM jetty:9.4.36-jre8
+FROM jetty:9.3-alpine
 USER root
 
 ENV APPSERVER_HOME /var/lib/jetty
@@ -16,7 +16,7 @@ RUN mkdir -p $APPSERVER_APPS/ROOT
 RUN unzip $APP_HOME/lib/proai.war -d $APPSERVER_APPS/ROOT/
 
 # Build and put jar lib into exploded war file
-RUN cd $APP_HOME/ && ./gradlew shadowJar && cp $APP_HOME/build/libs/proai-solr-driver-fat.jar $APPSERVER_APPS/ROOT/WEB-INF/lib/
+RUN cd $APP_HOME/ && chmod +x gradlew && ./gradlew shadowJar && cp $APP_HOME/build/libs/proai-solr-driver-fat.jar $APPSERVER_APPS/ROOT/WEB-INF/lib/
 RUN cp $APP_HOME/proai.properties $APPSERVER_APPS/ROOT/WEB-INF/classes/
 RUN chown -R jetty:jetty $APPSERVER_HOME
 
